@@ -1,10 +1,10 @@
 {
-  "name": "lifx",
+  "name": "lifx-cli",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "node lifx-cli.js"
   },
   "dependencies": {
     "commander": "^2.18.0",
