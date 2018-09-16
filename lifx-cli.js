@@ -9,20 +9,24 @@ function exit() {
   process.exit(1);
 }
 
+function demandBulbFlags(yargs) {
+  return yargs
+    .option("ip", {
+      describe: "Bulb IP-address"
+    })
+    .option("mac", {
+      describe: "Bulb MAC-address"
+    })
+    .demandOption(["ip", "mac"]);
+}
+
 yargs
   .version()
   .help()
-  .option("ip", {
-    describe: "Bulb IP-address"
-  })
-  .option("mac", {
-    describe: "Bulb MAC-address"
-  })
-  .demandOption(["ip", "mac"])
   .command(
     "color <hue> <saturation> <brightness> <kelvin>",
     "Set light color",
-    noop,
+    demandBulbFlags,
     ({ hue, saturation, brightness, kelvin, ip, mac }) =>
       lifx
         .createDevice({
@@ -43,7 +47,7 @@ yargs
   )
   .command("power <on|off>", "Power light on or off", yargs =>
     yargs
-      .command("on", "Power light on", noop, ({ ip, mac }) =>
+      .command("on", "Power light on", demandBulbFlags, ({ ip, mac }) =>
         lifx
           .createDevice({
             ip,
@@ -52,7 +56,7 @@ yargs
           .then(device => device.turnOn())
           .then(exit)
       )
-      .command("off", "Power light off", noop, ({ ip, mac }) =>
+      .command("off", "Power light off", demandBulbFlags, ({ ip, mac }) =>
         lifx
           .createDevice({
             ip,
@@ -61,4 +65,14 @@ yargs
           .then(device => device.turnOff())
           .then(exit)
       )
+  )
+  .command("discover", "Discover lights on your network", noop, () =>
+    lifx
+      .discover()
+      .then(list =>
+        list.forEach(({ mac, ip, deviceInfo: { label, productName } }) =>
+          console.log(`${productName} (${label})\t${ip}\t${mac}`)
+        )
+      )
+      .then(exit)
   ).argv;
