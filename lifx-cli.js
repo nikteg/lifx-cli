@@ -21,7 +21,7 @@ yargs
   .demandOption(["ip", "mac"])
   .command(
     "color <hue> <saturation> <brightness> <kelvin>",
-    "Set lights color",
+    "Set light color",
     noop,
     ({ hue, saturation, brightness, kelvin, ip, mac }) =>
       lifx
@@ -41,9 +41,9 @@ yargs
         )
         .then(exit)
   )
-  .command("power <on|off>", "Power lights on or off", yargs =>
+  .command("power <on|off>", "Power light on or off", yargs =>
     yargs
-      .command("on", "Power lights on", noop, ({ ip, mac }) =>
+      .command("on", "Power light on", noop, ({ ip, mac }) =>
         lifx
           .createDevice({
             ip,
@@ -52,7 +52,7 @@ yargs
           .then(device => device.turnOn())
           .then(exit)
       )
-      .command("off", "Power lights off", noop, ({ ip, mac }) =>
+      .command("off", "Power light off", noop, ({ ip, mac }) =>
         lifx
           .createDevice({
             ip,
