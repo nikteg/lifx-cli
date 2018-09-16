@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/local/bin/node
 
 const yargs = require("yargs");
 const lifx = require("node-lifx-lan");
@@ -35,7 +35,7 @@ yargs
               hue: Math.min(1, Math.max(parseFloat(hue), 0)), // 0.0-1.0
               saturation: Math.min(1, Math.max(parseFloat(saturation), 0)), // 0.0-1.0
               brightness: Math.min(1, Math.max(parseFloat(brightness), 0)), // 0.0-1.0
-              kelvin: Math.min(9000, Math.max(parseInt(kelvin), 2500)) // 2500-9000
+              kelvin: Math.min(9000, Math.max(parseInt(kelvin), 1500)) // 1500-9000
             }
           })
         )
@@ -43,7 +43,7 @@ yargs
   )
   .command("power <on|off>", "Power lights on or off", yargs =>
     yargs
-      .command("on", "Power lights on", noop, () =>
+      .command("on", "Power lights on", noop, ({ ip, mac }) =>
         lifx
           .createDevice({
             ip,
@@ -52,7 +52,7 @@ yargs
           .then(device => device.turnOn())
           .then(exit)
       )
-      .command("off", "Power lights off", noop, () =>
+      .command("off", "Power lights off", noop, ({ ip, mac }) =>
         lifx
           .createDevice({
             ip,

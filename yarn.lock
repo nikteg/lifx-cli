@@ -129,9 +129,9 @@ nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
 
-node-lifx-lan@^0.3.0:
+node-lifx-lan@nikteg/node-lifx-lan:
   version "0.3.0"
-  resolved "https://registry.yarnpkg.com/node-lifx-lan/-/node-lifx-lan-0.3.0.tgz#e6ecec0f6cd4da12a46db8f7a108342679ee9c7f"
+  resolved "https://codeload.github.com/nikteg/node-lifx-lan/tar.gz/ca9695f21c753420f4dda0fb2a305d34bf7be2ef"
 
 npm-run-path@^2.0.0:
   version "2.0.2"
