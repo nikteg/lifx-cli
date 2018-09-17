@@ -1,4 +1,4 @@
-#!/usr/local/bin/node
+#! /usr/bin/env node
 
 const yargs = require("yargs");
 const lifx = require("node-lifx-lan");
