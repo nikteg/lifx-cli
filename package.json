@@ -2,6 +2,7 @@
   "name": "lifx-cli",
   "version": "1.0.0",
   "main": "index.js",
+  "bin": "./lifx-cli.js",
   "license": "MIT",
   "scripts": {
     "start": "node lifx-cli.js"
