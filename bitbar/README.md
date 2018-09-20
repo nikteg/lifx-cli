@@ -3,7 +3,7 @@
 Visit the following URL in your favorite browser:
 
 ```
-bitbar://openPlugin?title=Lifx%20bitbar%20plugin&src=https://github.com/nikteg/lifx-cli/bitbar/raw/master/lifx.sh
+bitbar://openPlugin?title=Lifx%20bitbar%20plugin&src=https://github.com/nikteg/lifx-cli/raw/master/bitbar/lifx.sh
 ```
 
 Then open up your bitbar plugins folder and add your bulb's IP and MAC addresses in the `lifx.sh` file:
