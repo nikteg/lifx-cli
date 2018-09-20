@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# <bitbar.title>Lifx bitbar plugin</bitbar.title>
+# <bitbar.version>v1.0</bitbar.version>
+# <bitbar.author>Niklas Tegnander</bitbar.author>
+# <bitbar.author.github>nikteg</bitbar.author.github>
+# <bitbar.desc>Change your Lifx light with bitbar!</bitbar.desc>
+# <bitbar.dependencies>node</bitbar.dependencies>
+# <bitbar.abouturl>https://github.com/nikteg/lifx-cli/</bitbar.abouturl>
+
 export PATH="/usr/local/bin:$PATH"
 
 # Populate bulb IP and MAC addresses
