@@ -18,12 +18,8 @@ function power() {
   lifx-cli --ip $BULB_IP --mac $BULB_MAC power $1
 }
 
-function off() {
-  lifx-cli --ip $BULB_IP --mac $BULB_MAC power $1
-}
-
 function kelvin() {
-  lifx-cli --ip $BULB_IP --mac $BULB_MAC color 1 1 1 $1
+  lifx-cli --ip $BULB_IP --mac $BULB_MAC power on --color "1,1,1,$1"
 }
 
 echo "Lights"
