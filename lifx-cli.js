@@ -20,6 +20,22 @@ function demandBulbFlags(yargs) {
     .demandOption(["ip", "mac"]);
 }
 
+function createColorObject(
+  hue = 1,
+  saturation = 1,
+  brightness = 1,
+  kelvin = 3000
+) {
+  return {
+    color: {
+      hue: Math.min(1, Math.max(parseFloat(hue), 0)), // 0.0-1.0
+      saturation: Math.min(1, Math.max(parseFloat(saturation), 0)), // 0.0-1.0
+      brightness: Math.min(1, Math.max(parseFloat(brightness), 0)), // 0.0-1.0
+      kelvin: Math.min(9000, Math.max(parseInt(kelvin), 1500)) // 1500-9000
+    }
+  };
+}
+
 yargs
   .version()
   .help()
@@ -27,34 +43,42 @@ yargs
     "color <hue> <saturation> <brightness> <kelvin>",
     "Set light color",
     demandBulbFlags,
-    ({ hue, saturation, brightness, kelvin, ip, mac }) =>
+    ({ ip, mac }) =>
       lifx
         .createDevice({
           ip,
           mac
         })
         .then(device =>
-          device.setColor({
-            color: {
-              hue: Math.min(1, Math.max(parseFloat(hue), 0)), // 0.0-1.0
-              saturation: Math.min(1, Math.max(parseFloat(saturation), 0)), // 0.0-1.0
-              brightness: Math.min(1, Math.max(parseFloat(brightness), 0)), // 0.0-1.0
-              kelvin: Math.min(9000, Math.max(parseInt(kelvin), 1500)) // 1500-9000
-            }
-          })
+          device.setColor(
+            createColorObject(hue, saturation, brightness, kelvin)
+          )
         )
         .then(exit)
   )
   .command("power <on|off>", "Power light on or off", yargs =>
     yargs
-      .command("on", "Power light on", demandBulbFlags, ({ ip, mac }) =>
-        lifx
-          .createDevice({
-            ip,
-            mac
-          })
-          .then(device => device.turnOn())
-          .then(exit)
+      .command(
+        "on",
+        "Power light on",
+        yargs =>
+          demandBulbFlags(yargs).option("color", {
+            describe:
+              "Color object. Example: 'hue,saturation,brightness,kelvin'"
+          }),
+        ({ ip, mac, color }) =>
+          lifx
+            .createDevice({
+              ip,
+              mac
+            })
+            .then(
+              device =>
+                color
+                  ? device.turnOn(createColorObject(...color.split(",")))
+                  : device.turnOn()
+            )
+            .then(exit)
       )
       .command("off", "Power light off", demandBulbFlags, ({ ip, mac }) =>
         lifx
